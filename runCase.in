@@ -1,0 +1,6 @@
+DataPath = C:\\Users\\Utente\\Desktop\\ASJA\\OCRA_1.0_UNI_PAVIA
+InputPath =  C:\\Users\\Utente\\Desktop\\ASJA\\OCRA_1.0_UNI_PAVIA
+ResultPath =  C:\\Users\\Utente\\Desktop\\ASJA\\OCRA_1.0_UNI_PAVIA
+#ending to case name 
+CaseName = _Version_exact_inequalities
+

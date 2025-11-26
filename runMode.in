@@ -1,0 +1,17 @@
+# Set input
+    # from .in file, else from jld file
+    setInputParameters = true
+
+    # from input files, else from jld inputhpath
+    batterySystemFromFile = true
+
+    excel_savings = true
+
+# Solver settings
+    solveMIP = true
+    #If using SOS2
+
+
+    
+
+  

@@ -1,0 +1,11 @@
+
+#problem definition
+    NYears = 10
+    NMonths = 6
+    NHoursStep = 1.0
+
+#General
+    Big = 1.02
+    conv = 0.001
+    disc = 15
+
