@@ -2,8 +2,8 @@
 # characteristics and parameters
     min_SOC = 0.2
     max_SOC = 1.0
-    Eff_charge = 0.9
-    Eff_discharge = 0.9
+    Eff_charge = 0.98
+    Eff_discharge = 0.98
     min_P = 0.0
     max_P = 1.0
     max_SOH = 1.05
