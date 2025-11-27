@@ -189,7 +189,7 @@ function BuildStageProblemNoDeg_4(InputParameters::InputParam, SolverParameters:
     @constraint(M_sim, zu_2[iStep=1:NSteps+1], w_zu[iStep] <= u[iStep])
     @constraint(M_sim, zu_3[iStep=1:NSteps+1], w_zu[iStep] >= z[iStep]+u[iStep]-1)
     
-    return BuildStageProblem_no_deg(
+    return BuildStageProblem_no_deg_4(
         M_sim,
         soc,
         soc_quad,
@@ -334,7 +334,7 @@ function BuildStageProblemNoDeg_5(InputParameters::InputParam, SolverParameters:
     @constraint(M_sim, tu_2[iStep=1:NSteps+1], w_tu[iStep] <= u[iStep])
     @constraint(M_sim, tu_3[iStep=1:NSteps+1], w_tu[iStep] >= t[iStep]+u[iStep]-1)
     
-    return BuildStageProblem_no_deg(
+    return BuildStageProblem_no_deg_5(
         M_sim,
         soc,
         soc_quad,

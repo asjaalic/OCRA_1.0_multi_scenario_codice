@@ -412,7 +412,7 @@ function BuildStageProblem_5(InputParameters::InputParam, SolverParameters::Solv
     @constraint(M,en_cap[iStage in 1:NStages, iStep in (vector_stages_index[iScen,iStage]+2:vector_stages_index[iScen,iStage+1])], capacity[iStep+1]== capacity[iStep]-deg[iStep]*k) 
     
 
-    return BuildStageProblem(
+    return BuildStageProblem_5(
         M,
         soc,
         soc_quad,

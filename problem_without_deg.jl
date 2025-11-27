@@ -139,16 +139,22 @@ function solveWithoutDeg_4(InputParameters::InputParam, SolverParameters::Solver
     x_no_deg = zeros(NScen, NSteps+1)
     y_no_deg = zeros(NScen, NSteps+1)
     z_no_deg = zeros(NScen, NSteps+1)
+    u_no_deg = zeros(NScen, NSteps+1)
 
     w_xx_no_deg = zeros(NScen, NSteps+1)
     w_yy_no_deg = zeros(NScen, NSteps+1)
     w_zz_no_deg = zeros(NScen, NSteps+1)
+    w_uu_no_deg = zeros(NScen, NSteps+1)
+
     w_xy_no_deg = zeros(NScen, NSteps+1)
     w_xz_no_deg = zeros(NScen, NSteps+1)
     w_zy_no_deg = zeros(NScen, NSteps+1)
+    w_xu_no_deg = zeros(NScen, NSteps+1)
+    w_yu_no_deg = zeros(NScen, NSteps+1)
+    w_zu_no_deg = zeros(NScen, NSteps+1)
 
 
-    sim = BuildStageProblemNoDeg(InputParameters, SolverParameters, Battery)
+    sim = BuildStageProblemNoDeg_4(InputParameters, SolverParameters, Battery)
 
     for iScen=1:NScen
 
@@ -194,7 +200,9 @@ function solveWithoutDeg_4(InputParameters::InputParam, SolverParameters::Solver
                 w_xy_no_deg[iScen, iStep] = JuMP.value(sim.w_xy[iStep])
                 w_xz_no_deg[iScen, iStep] = JuMP.value(sim.w_xz[iStep])
                 w_zy_no_deg[iScen, iStep] = JuMP.value(sim.w_zy[iStep])
-
+                w_xu_no_deg[iScen, iStep] = JuMP.value(sim.w_xu[iStep])
+                w_yu_no_deg[iScen, iStep] = JuMP.value(sim.w_yu[iStep])
+                w_zu_no_deg[iScen, iStep] = JuMP.value(sim.w_zu[iStep])
             end
 
             soc_no_deg[iScen, end] = JuMP.value(sim.soc[end])
@@ -202,13 +210,19 @@ function solveWithoutDeg_4(InputParameters::InputParam, SolverParameters::Solver
             x_no_deg[iScen, end] = JuMP.value(sim.x[end])
             y_no_deg[iScen, end] = JuMP.value(sim.y[end])
             z_no_deg[iScen, end] = JuMP.value(sim.z[end])
+            u_no_deg[iScen, end] = JuMP.value(sim.u[end])
 
             w_xx_no_deg[iScen, end] = JuMP.value(sim.w_xx[end])
             w_yy_no_deg[iScen, end] = JuMP.value(sim.w_yy[end])
             w_zz_no_deg[iScen, end] = JuMP.value(sim.w_zz[end])
+            w_uu_no_deg[iScen, end] = JuMP.value(sim.w_uu[end])
+
             w_xy_no_deg[iScen, end] = JuMP.value(sim.w_xy[end])
             w_xz_no_deg[iScen, end] = JuMP.value(sim.w_xz[end])
             w_zy_no_deg[iScen, end] = JuMP.value(sim.w_zy[end])
+            w_xu_no_deg[iScen, end] = JuMP.value(sim.w_xu[end])
+            w_yu_no_deg[iScen, end] = JuMP.value(sim.w_yu[end])
+            w_zu_no_deg[iScen, end] = JuMP.value(sim.w_zu[end])
 
         
             for iStage=2:(NStages-1)

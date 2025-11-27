@@ -328,13 +328,13 @@ function data_saving_4(InputParameters::InputParam, ResultsOpt_4::Results_4, Res
             hourly_results[!, "Y"] = y[iScen][1:end-1]
             hourly_results[!, "Z"] = z[iScen][1:end-1]
             hourly_results[!, "U"] = u[iScen][1:end-1]
-            hourly_results[!, "XX"] = w_xx[iScen][:]
-            hourly_results[!, "YY"] = w_yy[iScen][:]
-            hourly_results[!, "ZZ"] = w_zz[iScen][:]
-            hourly_results[!, "UU"] = w_uu[iScen][:]
-            hourly_results[!, "XY"] = w_xy[iScen][:]
-            hourly_results[!, "XZ"] = w_xz[iScen][:]
-            hourly_results[!, "ZY"] = w_zy[iScen][:]
+            hourly_results[!, "XX"] = w_xx[iScen][1:end-1]
+            hourly_results[!, "YY"] = w_yy[iScen][1:end-1]
+            hourly_results[!, "ZZ"] = w_zz[iScen][1:end-1]
+            hourly_results[!, "UU"] = w_uu[iScen][1:end-1]
+            hourly_results[!, "XY"] = w_xy[iScen][1:end-1]
+            hourly_results[!, "XZ"] = w_xz[iScen][1:end-1]
+            hourly_results[!, "ZY"] = w_zy[iScen][1:end-1]
 
             XLSX.writetable("$iScen scenario .xlsx", overwrite=true,                                       #$nameFile
             results_stages = (collect(DataFrames.eachcol(stage_results)),DataFrames.names(stage_results)),
@@ -555,14 +555,14 @@ function data_saving_5(InputParameters::InputParam, ResultsOpt_5::Results_5, Res
             hourly_results[!, "Z"] = z[iScen][1:end-1]
             hourly_results[!, "U"] = u[iScen][1:end-1]
             hourly_results[!, "T"] = t[iScen][1:end-1]
-            hourly_results[!, "XX"] = w_xx[iScen][:]
-            hourly_results[!, "YY"] = w_yy[iScen][:]
-            hourly_results[!, "ZZ"] = w_zz[iScen][:]
-            hourly_results[!, "UU"] = w_uu[iScen][:]
-            hourly_results[!, "TT"] = w_tt[iScen][:]
-            hourly_results[!, "XY"] = w_xy[iScen][:]
-            hourly_results[!, "XZ"] = w_xz[iScen][:]
-            hourly_results[!, "ZY"] = w_zy[iScen][:]
+            hourly_results[!, "XX"] = w_xx[iScen][1:end-1]
+            hourly_results[!, "YY"] = w_yy[iScen][1:end-1]
+            hourly_results[!, "ZZ"] = w_zz[iScen][1:end-1]
+            hourly_results[!, "UU"] = w_uu[iScen][1:end-1]
+            hourly_results[!, "TT"] = w_tt[iScen][1:end-1]
+            hourly_results[!, "XY"] = w_xy[iScen][1:end-1]
+            hourly_results[!, "XZ"] = w_xz[iScen][1:end-1]
+            hourly_results[!, "ZY"] = w_zy[iScen][1:end-1]
 
             XLSX.writetable("$iScen scenario .xlsx", overwrite=true,                                       #$nameFile
             results_stages = (collect(DataFrames.eachcol(stage_results)),DataFrames.names(stage_results)),
