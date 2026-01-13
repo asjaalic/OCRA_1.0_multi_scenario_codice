@@ -10,7 +10,7 @@ function data_saving(InputParameters::InputParam, ResultsOpt::Results, Results_e
     hour=string(now())
     a=replace(hour,':'=> '-')
 
-    nameF= "OCRA filtrato $NScen scenari disc=16, E_Max=$max_SOH "
+    nameF= "$max_SOH SoH_max, $min_SOC SoC_min, mid-cost projections N=7 new, filtrato"
     folder = "$nameF"
     mkdir(folder)
     cd(folder)
@@ -120,15 +120,16 @@ end
 
 function data_saving_without_deg(Results_No_Deg::ResultWithoutDeg, Results_ex_post::results_ex_post, NSteps, NStages)
 
+    @unpack (min_SOC, max_SOC, min_P, max_P, Eff_charge, Eff_discharge, max_SOH, min_SOH, Nfull) = Battery ; 
     @unpack (revenues_per_stage_no_deg, soc_no_deg, soc_quad_no_deg, charge_no_deg, discharge_no_deg) = Results_No_Deg;
     @unpack (deg_singola, deg_stage, costo_stage, net_revenues, vector_prices, vector_stages_index, vector_downtime_stages) = Results_ex_post;
 
-    cart = "BESS $NScen scenari historical, $NStages stages, 1.10 max, mid-cost projections N=16 new"
+    cart = "RISULTATI 2026-2036, N=7 new"
     mkdir(cart)
     cd(cart)
     main = pwd()
 
-    c = "Risultati senza degradazione"
+    c = "Risultati senza degradazione, $max_SOH SoH_max, $min_SOC SoC_min, imd cost"
     mkdir(c)
     cd(c)
     

@@ -1,5 +1,5 @@
 #GUROBI
-    MIPGap = 0.025
+    MIPGap = 0.01
     MIPFocus = 3
     Method = 2      
     Cuts = -1

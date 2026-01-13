@@ -52,10 +52,21 @@ to = TimerOutput()
   SolverParameters = set_solverParameters()
 
   # Set BESS revamping costs 
-  Battery_price_purchase = read_csv("Battery_decreasing_prices_high.csv",case.DataPath) 
+  Battery_price_purchase = read_csv("Mid-cost projections 2026-2036.csv",case.DataPath) 
  
   # Set scenarios to simulate
-  Pp = read_csv("5_scenari.csv", case.DataPath);
+  Pp_26 = read_csv("2026.csv", case.DataPath);
+  Pp_27 = read_csv("2027.csv", case.DataPath);
+  Pp_28 = read_csv("2028.csv", case.DataPath);
+  Pp_29 = read_csv("2029.csv", case.DataPath);
+  Pp_30 = read_csv("2030.csv", case.DataPath);
+  Pp_31 = read_csv("2031.csv", case.DataPath);
+  Pp_32 = read_csv("2032.csv", case.DataPath);
+  Pp_33 = read_csv("2033.csv", case.DataPath);
+  Pp_34 = read_csv("2034.csv", case.DataPath);
+  Pp_35 = read_csv("2035.csv", case.DataPath);
+
+  Pp = vcat(Pp_26, Pp_27, Pp_28, Pp_29, Pp_30, Pp_31, Pp_32, Pp_32, Pp_33, Pp_34, Pp_35);
   NScen = size(Pp)[2]
   NSteps = size(Pp)[1]
   Steps_stages = [0 4380 8760 13140 17520 21900 26280 30660 35040 39420 43800 48180 52560 56940 61320 65700 70080 74460 78840 83220 87600]
@@ -78,7 +89,7 @@ end
 
 main=0
 @timeit to "Save results WITHOUT degradation" begin
-  cartella = "C:\\Users\\Utente\\Desktop\\ASJA\\OCRA_1.0_UNI_PAVIA\\Risultati_completo"
+  cartella = "C:\\GitHub_Asja\\Ocra_1.0_multi_scenario\\Results_multi_scenario"
   cd(cartella)
   main = data_saving_without_deg(Results_No_Deg, Results_ex_post, NSteps, NStages)
 end

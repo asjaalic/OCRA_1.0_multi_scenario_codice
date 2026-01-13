@@ -29,17 +29,17 @@ function solveOptimizationProblem(InputParameters::InputParam, SolverParameters:
     x = Vector{Vector{Float64}}(undef,NScen)
     y = Vector{Vector{Float64}}(undef,NScen)
     z = Vector{Vector{Float64}}(undef,NScen)
-    u = Vector{Vector{Float64}}(undef,NScen)
+   # u = Vector{Vector{Float64}}(undef,NScen)
     w_xx = Vector{Vector{Float64}}(undef,NScen)
     w_yy = Vector{Vector{Float64}}(undef,NScen)
     w_zz = Vector{Vector{Float64}}(undef,NScen)
     w_xy = Vector{Vector{Float64}}(undef,NScen)
     w_xz = Vector{Vector{Float64}}(undef,NScen)
     w_zy = Vector{Vector{Float64}}(undef,NScen)
-    w_uu = Vector{Vector{Float64}}(undef,NScen)
-    w_xu = Vector{Vector{Float64}}(undef,NScen)
-    w_yu = Vector{Vector{Float64}}(undef,NScen)
-    w_zu = Vector{Vector{Float64}}(undef,NScen)
+    #w_uu = Vector{Vector{Float64}}(undef,NScen)
+    #w_xu = Vector{Vector{Float64}}(undef,NScen)
+    #w_yu = Vector{Vector{Float64}}(undef,NScen)
+    #w_zu = Vector{Vector{Float64}}(undef,NScen)
 
     problem = 0 #BuildStageProblem(InputParameters, SolverParameters, Battery)
     NSteps_sim= 0
@@ -59,17 +59,17 @@ function solveOptimizationProblem(InputParameters::InputParam, SolverParameters:
         x[iScen] = Float64[]
         y[iScen] = Float64[]
         z[iScen] = Float64[]
-        u[iScen] = Float64[]
+        #u[iScen] = Float64[]
         w_xx[iScen] = Float64[]
         w_yy[iScen] = Float64[]
         w_zz[iScen] = Float64[]
         w_xy[iScen] = Float64[]
         w_xz[iScen] = Float64[]
         w_zy[iScen] = Float64[]
-        w_uu[iScen] = Float64[]
-        w_xu[iScen] = Float64[]
-        w_yu[iScen] = Float64[]
-        w_zu[iScen] = Float64[]
+        #w_uu[iScen] = Float64[]
+        #w_xu[iScen] = Float64[]
+        #w_yu[iScen] = Float64[]
+        #w_zu[iScen] = Float64[]
 
         @timeit to "Solve optimization" optimize!(problem.M)
 
@@ -94,19 +94,19 @@ function solveOptimizationProblem(InputParameters::InputParam, SolverParameters:
                 push!(x[iScen],JuMP.value(problem.x[iStep]))
                 push!(y[iScen],JuMP.value(problem.y[iStep]))
                 push!(z[iScen],JuMP.value(problem.z[iStep]))
-                push!(u[iScen],JuMP.value(problem.u[iStep]))
+                #push!(u[iScen],JuMP.value(problem.u[iStep]))
 
                 push!(w_xx[iScen],JuMP.value(problem.w_xx[iStep]))
                 push!(w_yy[iScen],JuMP.value(problem.w_yy[iStep]))
                 push!(w_zz[iScen],JuMP.value(problem.w_zz[iStep]))
-                push!(w_uu[iScen],JuMP.value(problem.w_uu[iStep]))
+                #push!(w_uu[iScen],JuMP.value(problem.w_uu[iStep]))
 
                 push!(w_xy[iScen],JuMP.value(problem.w_xy[iStep]))
                 push!(w_xz[iScen],JuMP.value(problem.w_xz[iStep]))
                 push!(w_zy[iScen],JuMP.value(problem.w_zy[iStep]))
-                push!(w_xu[iScen],JuMP.value(problem.w_xu[iStep]))
-                push!(w_yu[iScen],JuMP.value(problem.w_yu[iStep]))
-                push!(w_zu[iScen],JuMP.value(problem.w_zu[iStep]))
+                #push!(w_xu[iScen],JuMP.value(problem.w_xu[iStep]))
+                #push!(w_yu[iScen],JuMP.value(problem.w_yu[iStep]))
+                #push!(w_zu[iScen],JuMP.value(problem.w_zu[iStep]))
 
             end
                     
@@ -117,19 +117,19 @@ function solveOptimizationProblem(InputParameters::InputParam, SolverParameters:
             push!(x[iScen],JuMP.value(problem.x[end]))
             push!(y[iScen],JuMP.value(problem.y[end]))
             push!(z[iScen],JuMP.value(problem.z[end]))
-            push!(u[iScen],JuMP.value(problem.u[end]))
+            #push!(u[iScen],JuMP.value(problem.u[end]))
 
             push!(w_xx[iScen],JuMP.value(problem.w_xx[end]))
             push!(w_yy[iScen],JuMP.value(problem.w_yy[end]))
             push!(w_zz[iScen],JuMP.value(problem.w_zz[end]))
-            push!(w_uu[iScen],JuMP.value(problem.w_uu[end]))
+           # push!(w_uu[iScen],JuMP.value(problem.w_uu[end]))
 
             push!(w_xy[iScen],JuMP.value(problem.w_xy[end]))
             push!(w_xz[iScen],JuMP.value(problem.w_xz[end]))
             push!(w_zy[iScen],JuMP.value(problem.w_zy[end]))
-            push!(w_xu[iScen],JuMP.value(problem.w_xu[end]))
+            #=push!(w_xu[iScen],JuMP.value(problem.w_xu[end]))
             push!(w_yu[iScen],JuMP.value(problem.w_yu[end]))
-            push!(w_zu[iScen],JuMP.value(problem.w_zu[end]))
+            push!(w_zu[iScen],JuMP.value(problem.w_zu[end]))=#
         
             
             for iStage=1:NStages
@@ -172,17 +172,17 @@ function solveOptimizationProblem(InputParameters::InputParam, SolverParameters:
         x,
         y,
         z,
-        u,
+        #u,
         w_xx,
         w_yy,
         w_zz,
-        w_uu,
+        #w_uu,
         w_xy,
         w_xz,
         w_zy,
-        w_xu,
-        w_yu,
-        w_zu,
+        #w_xu,
+        #w_yu,
+        #w_zu,
         rev,
         cap,  
     )

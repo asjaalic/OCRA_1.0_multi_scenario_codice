@@ -71,17 +71,17 @@ struct BuildStageProblem
     x::Any
     y::Any
     z::Any
-    u::Any
+    #u::Any
     w_xx::Any
     w_yy::Any
     w_zz::Any
     w_xy::Any
     w_xz::Any
     w_zy::Any
-    w_uu::Any
-    w_xu::Any
-    w_yu::Any
-    w_zu::Any
+    #w_uu::Any
+    #w_xu::Any
+    #w_yu::Any
+    #w_zu::Any
     capacity::Any
     revamping::Any
     e::Any
@@ -107,17 +107,17 @@ struct Results
     x::Any
     y::Any
     z::Any
-    u::Any
+    #u::Any
     w_xx::Any
     w_yy::Any
     w_zz::Any
-    w_uu::Any
+   # w_uu::Any
     w_xy::Any
     w_xz::Any
     w_zy::Any
-    w_xu::Any
-    w_yu::Any
-    w_zu::Any
+    #w_xu::Any
+    #w_yu::Any
+    #w_zu::Any
     rev::Any
     cap::Any
 end
@@ -132,17 +132,17 @@ struct BuildStageProblem_no_deg
     x::Any
     y::Any
     z::Any
-    u::Any
+    #u::Any
     w_xx::Any
     w_yy::Any
     w_zz::Any
     w_xy::Any
     w_xz::Any
     w_zy::Any
-    w_uu::Any
-    w_xu::Any
-    w_yu::Any
-    w_zu::Any
+    #w_uu::Any
+    #w_xu::Any
+    #w_yu::Any
+    #w_zu::Any
     e::Any
     #=t::Any
     w_tt::Any
@@ -162,17 +162,17 @@ struct ResultWithoutDeg
     x_no_deg::Any
     y_no_deg::Any
     z_no_deg::Any
-    u_no_deg::Any
+    #u_no_deg::Any
     w_xx_no_deg::Any
     w_yy_no_deg::Any
     w_zz_no_deg::Any
-    w_uu_no_deg::Any
+    #w_uu_no_deg::Any
     w_xy_no_deg::Any
     w_xz_no_deg::Any
     w_zy_no_deg::Any
-    w_xu_no_deg::Any
-    w_yu_no_deg::Any
-    w_zu_no_deg::Any
+    #w_xu_no_deg::Any
+    #w_yu_no_deg::Any
+    #w_zu_no_deg::Any
     e_no_deg::Any
 end
 

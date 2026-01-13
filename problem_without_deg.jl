@@ -19,17 +19,17 @@ function solveWithoutDeg(InputParameters::InputParam, SolverParameters::SolverPa
     x_no_deg = zeros(NScen, NSteps+1)
     y_no_deg = zeros(NScen, NSteps+1)
     z_no_deg = zeros(NScen, NSteps+1)
-    u_no_deg = zeros(NScen, NSteps+1)
+    #u_no_deg = zeros(NScen, NSteps+1)
     w_xx_no_deg = zeros(NScen, NSteps+1)
     w_yy_no_deg = zeros(NScen, NSteps+1)
     w_zz_no_deg = zeros(NScen, NSteps+1)
     w_xy_no_deg = zeros(NScen, NSteps+1)
     w_xz_no_deg = zeros(NScen, NSteps+1)
     w_zy_no_deg = zeros(NScen, NSteps+1)
-    w_uu_no_deg = zeros(NScen, NSteps+1)
-    w_xu_no_deg = zeros(NScen, NSteps+1)
-    w_yu_no_deg = zeros(NScen, NSteps+1)
-    w_zu_no_deg = zeros(NScen, NSteps+1)
+    #w_uu_no_deg = zeros(NScen, NSteps+1)
+    ##w_xu_no_deg = zeros(NScen, NSteps+1)
+    #w_yu_no_deg = zeros(NScen, NSteps+1)
+    #w_zu_no_deg = zeros(NScen, NSteps+1)
 
     sim = BuildStageProblemNoDeg(InputParameters, SolverParameters, Battery)
 
@@ -67,7 +67,7 @@ function solveWithoutDeg(InputParameters::InputParam, SolverParameters::SolverPa
                 x_no_deg[iScen, iStep] = JuMP.value(sim.x[iStep])
                 y_no_deg[iScen, iStep] = JuMP.value(sim.y[iStep])
                 z_no_deg[iScen, iStep] = JuMP.value(sim.z[iStep])
-                u_no_deg[iScen, iStep] = JuMP.value(sim.u[iStep])
+                #u_no_deg[iScen, iStep] = JuMP.value(sim.u[iStep])
                 w_xx_no_deg[iScen, iStep] = JuMP.value(sim.w_xx[iStep])
                 w_yy_no_deg[iScen, iStep] = JuMP.value(sim.w_yy[iStep])
                 w_zz_no_deg[iScen, iStep] = JuMP.value(sim.w_zz[iStep])
@@ -75,10 +75,10 @@ function solveWithoutDeg(InputParameters::InputParam, SolverParameters::SolverPa
                 w_xz_no_deg[iScen, iStep] = JuMP.value(sim.w_xz[iStep])
                 w_zy_no_deg[iScen, iStep] = JuMP.value(sim.w_zy[iStep])
 
-                w_uu_no_deg[iScen, iStep] = JuMP.value(sim.w_uu[iStep])
+              #=  w_uu_no_deg[iScen, iStep] = JuMP.value(sim.w_uu[iStep])
                 w_xu_no_deg[iScen, iStep] = JuMP.value(sim.w_xu[iStep])
                 w_yu_no_deg[iScen, iStep] = JuMP.value(sim.w_yu[iStep])
-                w_zu_no_deg[iScen, iStep] = JuMP.value(sim.w_zu[iStep])
+                w_zu_no_deg[iScen, iStep] = JuMP.value(sim.w_zu[iStep])=#
 
             end
 
@@ -87,7 +87,7 @@ function solveWithoutDeg(InputParameters::InputParam, SolverParameters::SolverPa
             x_no_deg[iScen, end] = JuMP.value(sim.x[end])
             y_no_deg[iScen, end] = JuMP.value(sim.y[end])
             z_no_deg[iScen, end] = JuMP.value(sim.z[end])
-            u_no_deg[iScen, end] = JuMP.value(sim.u[end])
+           # u_no_deg[iScen, end] = JuMP.value(sim.u[end])
             w_xx_no_deg[iScen, end] = JuMP.value(sim.w_xx[end])
             w_yy_no_deg[iScen, end] = JuMP.value(sim.w_yy[end])
             w_zz_no_deg[iScen, end] = JuMP.value(sim.w_zz[end])
@@ -95,10 +95,10 @@ function solveWithoutDeg(InputParameters::InputParam, SolverParameters::SolverPa
             w_xz_no_deg[iScen, end] = JuMP.value(sim.w_xz[end])
             w_zy_no_deg[iScen, end] = JuMP.value(sim.w_zy[end])
 
-            w_uu_no_deg[iScen, end] = JuMP.value(sim.w_uu[end])
+           #= w_uu_no_deg[iScen, end] = JuMP.value(sim.w_uu[end])
             w_xu_no_deg[iScen, end] = JuMP.value(sim.w_xu[end])
             w_yu_no_deg[iScen, end] = JuMP.value(sim.w_yu[end])
-            w_zu_no_deg[iScen, end] = JuMP.value(sim.w_zu[end])
+            w_zu_no_deg[iScen, end] = JuMP.value(sim.w_zu[end])=#
         
             for iStage=2:(NStages-1)
                 revenues_per_stage_no_deg[iScen, iStage] = sum(Pp[iStep, iScen]*NHoursStep*(discharge_no_deg[iScen, iStep]-charge_no_deg[iScen, iStep]) for iStep=(Steps_stages[iStage]+1):(Steps_stages[iStage+1])) 
@@ -121,17 +121,17 @@ function solveWithoutDeg(InputParameters::InputParam, SolverParameters::SolverPa
         x_no_deg,
         y_no_deg,
         z_no_deg,
-        u_no_deg,
+        #u_no_deg,
         w_xx_no_deg,
         w_yy_no_deg,
         w_zz_no_deg,
-        w_uu_no_deg,
+        #w_uu_no_deg,
         w_xy_no_deg,
         w_xz_no_deg,
         w_zy_no_deg,
-        w_xu_no_deg,
-        w_yu_no_deg,
-        w_zu_no_deg,
+       # w_xu_no_deg,
+       # w_yu_no_deg,
+       # w_zu_no_deg,
         e_no_deg,
     )
 
