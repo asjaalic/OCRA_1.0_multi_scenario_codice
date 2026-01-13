@@ -11,7 +11,7 @@
     NHoursStep::F                                 # Number of hours in each time step
     Big::F                                        # A big number
     conv::F                                       # A small number for degradation convergence
-    disc::I                                       # Discretization points
+    bin::I                                       # Discretization points
 end
 
 # Battery's characteristics
@@ -61,7 +61,111 @@ end
 end
 
 # Optimization problem
-struct BuildStageProblem
+struct BuildStageProblem_3
+    M::Any
+    soc::Any
+    soc_quad::Any
+    charge::Any 
+    discharge::Any
+    deg::Any
+    x::Any
+    y::Any
+    z::Any
+    w_xx::Any
+    w_yy::Any
+    w_zz::Any
+    w_xy::Any
+    w_xz::Any
+    w_zy::Any
+    capacity::Any
+    revamping::Any
+    e::Any
+end
+
+struct Results_3
+    objective::Any
+    net_revenues_per_stage::Any
+    WEM_stage::Any
+    cost_rev::Any
+    deg_stage::Any
+    soc::Any
+    charge::Any
+    discharge::Any
+    deg::Any
+    soc_quad::Any
+    x::Any
+    y::Any
+    z::Any
+    w_xx::Any
+    w_yy::Any
+    w_zz::Any
+    w_xy::Any
+    w_xz::Any
+    w_zy::Any
+    rev::Any
+    cap::Any
+end
+
+# Optimization problem
+struct BuildStageProblem_no_deg_3
+    M_sim::Any
+    soc::Any
+    soc_quad::Any
+    charge::Any 
+    discharge::Any
+    x::Any
+    y::Any
+    z::Any
+    w_xx::Any
+    w_yy::Any
+    w_zz::Any
+    w_xy::Any
+    w_xz::Any
+    w_zy::Any
+    e::Any
+end
+
+struct ResultWithoutDeg_3
+    objective_no_deg::Any
+    revenues_per_stage_no_deg::Any
+    soc_no_deg::Any
+    charge_no_deg::Any
+    discharge_no_deg::Any
+    soc_quad_no_deg::Any
+    x_no_deg::Any
+    y_no_deg::Any
+    z_no_deg::Any
+    w_xx_no_deg::Any
+    w_yy_no_deg::Any
+    w_zz_no_deg::Any
+    w_xy_no_deg::Any
+    w_xz_no_deg::Any
+    w_zy_no_deg::Any
+    e_no_deg::Any
+end
+
+struct results_ex_post
+    deg_singola::Any
+    deg_stage::Any
+    costo_stage::Any
+    net_revenues::Any
+    vector_prices::Any
+    vector_stages_index::Any
+    NSteps_scenario::Any
+    vector_downtime_stages::Any
+end
+
+struct Data_analysed
+    WEM_rev_stat_frame::Any
+    cost_stat_frame::Any
+    net_rev_stat_frame::Any
+    deg_stat_frame::Any
+    Initial_cap_stat_frame::Any
+    Final_cap_stat_frame::Any
+end
+
+# Optimization problem
+struct BuildStageProblem_4
     M::Any
     soc::Any
     soc_quad::Any
@@ -85,15 +189,9 @@ struct BuildStageProblem
     capacity::Any
     revamping::Any
     e::Any
-    #=t::Any
-    w_tt::Any
-    w_tx::Any
-    w_ty::Any
-    w_tz::Any
-    w_tu::Any=#
 end
 
-struct Results
+struct Results_4
     objective::Any
     net_revenues_per_stage::Any
     WEM_stage::Any
@@ -123,7 +221,7 @@ struct Results
 end
 
 # Optimization problem
-struct BuildStageProblem_no_deg
+struct BuildStageProblem_no_deg_4
     M_sim::Any
     soc::Any
     soc_quad::Any
@@ -144,15 +242,9 @@ struct BuildStageProblem_no_deg
     #w_yu::Any
     #w_zu::Any
     e::Any
-    #=t::Any
-    w_tt::Any
-    w_tx::Any
-    w_ty::Any
-    w_tz::Any
-    w_tu::Any=#
 end
 
-struct ResultWithoutDeg
+struct ResultWithoutDeg_4
     objective_no_deg::Any
     revenues_per_stage_no_deg::Any
     soc_no_deg::Any
@@ -176,22 +268,130 @@ struct ResultWithoutDeg
     e_no_deg::Any
 end
 
-struct results_ex_post
-    deg_singola::Any
-    deg_stage::Any
-    costo_stage::Any
-    net_revenues::Any
-    vector_prices::Any
-    vector_stages_index::Any
-    NSteps_scenario::Any
-    vector_downtime_stages::Any
+# Optimization problem
+struct BuildStageProblem_5
+    M::Any
+    soc::Any
+    soc_quad::Any
+    charge::Any 
+    discharge::Any
+    deg::Any
+    x::Any
+    y::Any
+    z::Any
+    u::Any
+    w_xx::Any
+    w_yy::Any
+    w_zz::Any
+    w_xy::Any
+    w_xz::Any
+    w_zy::Any
+    w_uu::Any
+    w_xu::Any
+    w_yu::Any
+    w_zu::Any
+    capacity::Any
+    revamping::Any
+    e::Any
+    t::Any
+    w_tt::Any
+    w_tx::Any
+    w_ty::Any
+    w_tz::Any
+    w_tu::Any
 end
 
-struct Data_analysed
-    WEM_rev_stat_frame::Any
-    cost_stat_frame::Any
-    net_rev_stat_frame::Any
-    deg_stat_frame::Any
-    Initial_cap_stat_frame::Any
-    Final_cap_stat_frame::Any
+struct Results_5
+    objective::Any
+    net_revenues_per_stage::Any
+    WEM_stage::Any
+    cost_rev::Any
+    deg_stage::Any
+    soc::Any
+    charge::Any
+    discharge::Any
+    deg::Any
+    soc_quad::Any
+    x::Any
+    y::Any
+    z::Any
+    u::Any
+    w_xx::Any
+    w_yy::Any
+    w_zz::Any
+    w_uu::Any
+    w_xy::Any
+    w_xz::Any
+    w_zy::Any
+    w_xu::Any
+    w_yu::Any
+    w_zu::Any
+    rev::Any
+    cap::Any
+    t::Any
+    w_tt::Any
+    w_tx::Any
+    w_ty::Any
+    w_tz::Any
+    w_tu::Any
+end
+
+# Optimization problem
+struct BuildStageProblem_no_deg_5
+    M_sim::Any
+    soc::Any
+    soc_quad::Any
+    charge::Any 
+    discharge::Any
+    x::Any
+    y::Any
+    z::Any
+    u::Any
+    w_xx::Any
+    w_yy::Any
+    w_zz::Any
+    w_xy::Any
+    w_xz::Any
+    w_zy::Any
+    w_uu::Any
+    w_xu::Any
+    w_yu::Any
+    w_zu::Any
+    e::Any
+    t::Any
+    w_tt::Any
+    w_tx::Any
+    w_ty::Any
+    w_tz::Any
+    w_tu::Any
+end
+
+struct ResultWithoutDeg_5
+    objective_no_deg::Any
+    revenues_per_stage_no_deg::Any
+    soc_no_deg::Any
+    charge_no_deg::Any
+    discharge_no_deg::Any
+    soc_quad_no_deg::Any
+    x_no_deg::Any
+    y_no_deg::Any
+    z_no_deg::Any
+    u_no_deg::Any
+    w_xx_no_deg::Any
+    w_yy_no_deg::Any
+    w_zz_no_deg::Any
+    w_uu_no_deg::Any
+    w_xy_no_deg::Any
+    w_xz_no_deg::Any
+    w_zy_no_deg::Any
+    w_xu_no_deg::Any
+    w_yu_no_deg::Any
+    w_zu_no_deg::Any
+    e_no_deg::Any
+    t_no_deg::Any
+    w_tt_no_deg::Any
+    w_tx_no_deg::Any
+    w_ty_no_deg::Any
+    w_tz_no_deg::Any
+    w_tu_no_deg::Any
 end

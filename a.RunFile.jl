@@ -16,15 +16,16 @@ using Statistics
 
 # Calls the other Julia files
 include("Structures.jl")
-include("SetInputParameters.jl")
-
-include("solveOptimizationAlgorithm.jl")        #solveOptimizationAlgorithm_3cuts
-include("ProblemFormulationInequalities.jl")      #ProblemFormulationCutsTaylor_3
+include("SetInputParameters.jl") 
 
 include("Saving in xlsx.jl")
 
 include("formulation_without_deg.jl")
 include("problem_without_deg.jl")
+
+include("solveOptimizationAlgorithm.jl")      
+include("ProblemFormulationInequalities.jl") 
+
 include("Ex_post analysis.jl")
 
 date = string(today())
@@ -42,7 +43,7 @@ to = TimerOutput()
   # Set run mode (how and what to run) and Input parameters
   runMode = read_runMode_file()
   InputParameters = set_parameters(runMode, case)
-  @unpack (NYears, NMonths, NHoursStep, NStages, Big, conv, disc)= InputParameters;    #NSteps, NHoursStage
+  @unpack (NYears, NMonths, NHoursStep, NStages, Big, conv, bin)= InputParameters;    #NSteps, NHoursStage
 
   # Upload battery's characteristics
   Battery = set_battery_system(runMode, case)
@@ -52,21 +53,10 @@ to = TimerOutput()
   SolverParameters = set_solverParameters()
 
   # Set BESS revamping costs 
-  Battery_price_purchase = read_csv("Mid-cost projections 2026-2036.csv",case.DataPath) 
+  Battery_price_purchase = read_csv("Battery_decreasing_prices_high.csv",case.DataPath) 
  
   # Set scenarios to simulate
-  Pp_26 = read_csv("2026.csv", case.DataPath);
-  Pp_27 = read_csv("2027.csv", case.DataPath);
-  Pp_28 = read_csv("2028.csv", case.DataPath);
-  Pp_29 = read_csv("2029.csv", case.DataPath);
-  Pp_30 = read_csv("2030.csv", case.DataPath);
-  Pp_31 = read_csv("2031.csv", case.DataPath);
-  Pp_32 = read_csv("2032.csv", case.DataPath);
-  Pp_33 = read_csv("2033.csv", case.DataPath);
-  Pp_34 = read_csv("2034.csv", case.DataPath);
-  Pp_35 = read_csv("2035.csv", case.DataPath);
-
-  Pp = vcat(Pp_26, Pp_27, Pp_28, Pp_29, Pp_30, Pp_31, Pp_32, Pp_32, Pp_33, Pp_34, Pp_35);
+  Pp = read_csv("5_scenari.csv", case.DataPath);
   NScen = size(Pp)[2]
   NSteps = size(Pp)[1]
   Steps_stages = [0 4380 8760 13140 17520 21900 26280 30660 35040 39420 43800 48180 52560 56940 61320 65700 70080 74460 78840 83220 87600]
@@ -78,36 +68,75 @@ to = TimerOutput()
 end
 
 @timeit to "Solve problem WITHOUT degradation" begin
-  Results_No_Deg = solveWithoutDeg(InputParameters, SolverParameters, Battery, NScen, NSteps, Pp, Steps_stages)
-  save(joinpath(FinalResPath, "optimization_results_no_deg.jld"), "optimization_results_no_deg", Results_No_Deg)
+  if bin ==3
+    Results_No_Deg_3 = solveWithoutDeg_3(InputParameters, SolverParameters, Battery, NScen, NSteps, Pp, Steps_stages)
+    #save(joinpath(FinalResPath, "optimization_results_no_deg.jld"), "optimization_results_no_deg", Results_No_Deg_3)
+  elseif bin == 4
+    Results_No_Deg_4 = solveWithoutDeg_4(InputParameters, SolverParameters, Battery, NScen, NSteps, Pp, Steps_stages)
+    #save(joinpath(FinalResPath, "optimization_results_no_deg.jld"), "optimization_results_no_deg", Results_No_Deg_4)
+  elseif bin == 5
+    Results_No_Deg_5 = solveWithoutDeg_5(InputParameters, SolverParameters, Battery, NScen, NSteps, Pp, Steps_stages)
+    #save(joinpath(FinalResPath, "optimization_results_no_deg.jld"), "optimization_results_no_deg", Results_No_Deg_5)
+  else
+    println("Inserire un numero tra 3, 4 e 5")
+    throw(error())
+  end
 end
 
 @timeit to "Ex-post costs evaluation and price filtering" begin
-  Results_ex_post = ex_post_analysis(Results_No_Deg, InputParameters, Battery, NScen, NSteps, Pp, Steps_stages)
-  save(joinpath(FinalResPath, "results_ex_post.jld"), "results_ex_post", Results_ex_post)
+  if bin == 3
+    Results_ex_post = ex_post_analysis_3(Results_No_Deg_3, InputParameters, Battery, NScen, NSteps, Pp, Steps_stages)
+  elseif bin == 4
+    Results_ex_post = ex_post_analysis_4(Results_No_Deg_4, InputParameters, Battery, NScen, NSteps, Pp, Steps_stages)
+  else
+    Results_ex_post = ex_post_analysis_5(Results_No_Deg_5, InputParameters, Battery, NScen, NSteps, Pp, Steps_stages)
+  end
 end
 
 main=0
 @timeit to "Save results WITHOUT degradation" begin
-  cartella = "C:\\GitHub_Asja\\Ocra_1.0_multi_scenario\\Results_multi_scenario"
+  cartella = "C:\\Users\\Utente\\Desktop\\ASJA\\OCRA_1.0_UNI_PAVIA\\Risultati_completo"
   cd(cartella)
-  main = data_saving_without_deg(Results_No_Deg, Results_ex_post, NSteps, NStages)
+  if bin == 3
+    main = data_saving_without_deg_3(Results_No_Deg_3, Results_ex_post, NSteps, NStages)
+  elseif bin == 4
+    main = data_saving_without_deg_4(Results_No_Deg_4, Results_ex_post, NSteps, NStages)
+  else
+    main = data_saving_without_deg_5(Results_No_Deg_5, Results_ex_post, NSteps, NStages)
+  end
 end
 
 
 @timeit to "Solve optimization problem WITH degradation" begin
-  ResultsOpt = solveOptimizationProblem(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
-  save(joinpath(FinalResPath, "optimization_results.jld"), "optimization_results", ResultsOpt)
+  if bin == 3
+    ResultsOpt_3 = solveOptimizationProblem_3(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
+  elseif bin == 4
+    ResultsOpt_4 = solveOptimizationProblem_4(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
+  else
+    ResultsOpt_5 = solveOptimizationProblem_5(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
+  end
 end
 
 @timeit to "Evaluate results WITH degradation: statistical analysis" begin
-  Results_statistics = statistical_analysis(ResultsOpt, Results_ex_post, NScen, NStages)
+  if bin == 3
+    Results_statistics = statistical_analysis_3(ResultsOpt_3, Results_ex_post, NScen, NStages)
+  elseif bin == 4
+    Results_statistics = statistical_analysis_4(ResultsOpt_4, Results_ex_post, NScen, NStages)
+  else
+    Results_statistics = statistical_analysis_5(ResultsOpt_5, Results_ex_post, NScen, NStages)
+  end
 end
 
 # SAVE DATA IN EXCEL FILES
 if runMode.excel_savings
   cd(main)
-  Saving = data_saving(InputParameters, ResultsOpt, Results_ex_post, Results_statistics, Battery, NScen)
+  if bin == 3
+    Saving = data_saving_3(InputParameters, ResultsOpt_3, Results_ex_post, Results_statistics, Battery, NScen)
+  elseif bin == 4
+    Saving = data_saving_4(InputParameters, ResultsOpt_4, Results_ex_post, Results_statistics, Battery, NScen)
+  else
+    Saving = data_saving_5(InputParameters, ResultsOpt_5, Results_ex_post, Results_statistics, Battery, NScen)
+  end
 else
   println("Solved without saving results in xlsx format.")
 end

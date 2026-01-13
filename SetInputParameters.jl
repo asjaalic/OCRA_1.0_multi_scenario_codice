@@ -125,7 +125,7 @@ function read_parameters_from_config_file(file = "configParameters.in")
   #paramDict = read_type_to_dict(file,Number)
   paramDict = read_type_to_dict(file, Any)
   
-  integers =[:NMonths :disc :NSteps]  #NYears
+  integers =[:NMonths :bin :NSteps]  #NYears
   paramDict = set_integers!(paramDict, integers)
 
   floats =[:NYears :Big :NHoursStep :conv]
