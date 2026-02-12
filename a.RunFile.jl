@@ -45,6 +45,8 @@ to = TimerOutput()
 
   # Set run mode (how and what to run) and Input parameters
   runMode = read_runMode_file()
+  @unpack (OCRA_1) = runMode
+
   InputParameters = set_parameters(runMode, case)
   @unpack (NYears, NMonths, NHoursStep, NStages, Big, conv, bin)= InputParameters;    #NSteps, NHoursStage
 
@@ -56,11 +58,11 @@ to = TimerOutput()
   SolverParameters = set_solverParameters()
 
   # Set BESS revamping costs 
-  Battery_price_purchase = read_csv("Battery_decreasing_prices_mid.csv",case.DataPath) 
+  Battery_price_purchase = read_csv("Yearly_battery_mid_cost.csv",case.DataPath) 
   Battery_price_sale = set_price(Battery_price_purchase,cost);
  
   # Set scenarios to simulate
-  Pp = read_csv("5_scenari.csv", case.DataPath); #100_scenarios_non_negative
+  Pp = read_csv("100_scenarios_non_negative.csv", case.DataPath); #100_scenarios_non_negative
   NScen = size(Pp)[2]
   NSteps = size(Pp)[1]
   Steps_stages = [0 8760 17520 26280 35040 43800 52560 61320 70080 78840 87600]
@@ -156,7 +158,7 @@ if runMode.excel_savings
       Saving = data_saving_5(InputParameters, ResultsOpt_5, Results_ex_post, Results_statistics, Battery, NScen)
     end
   else
-      Saving_OCRA_2 = saving_OCRA_2(InputParameters, Results_OCRA_2, results_ex_post, Results_statistics_OCRA_2, Battery, NScen)
+      Saving_OCRA_2 = saving_OCRA_2(InputParameters, Results_OCRA_2, Results_ex_post, Results_statistics_OCRA_2, Battery, NScen)
   end
 else
   println("Solved without saving results in xlsx format.")

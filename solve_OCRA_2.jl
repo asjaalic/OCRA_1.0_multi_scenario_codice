@@ -127,16 +127,16 @@ function solveOCRA_2(InputParameters::InputParam, SolverParameters::SolverParam,
         
             for iStage=2:(NStages-1)
                 WEM_stage[iScen, iStage] = sum(vector_prices[iScen][iStep]*NHoursStep*(discharge[iScen][iStep] - charge[iScen][iStep]) for iStep=(vector_stages_index[iScen, iStage]+1):(vector_stages_index[iScen, iStage+1]))
-                cost_rev[iScen, iStage] = Battery_price_purchase[iStage]*(cap[vector_stages_index[iScen, iStage]+2]+rev_acquisto[iStage]) - Battery_price_sale[iStage]*(cap[vector_stages_index[iScen,iStage]+1]-rev_vendita[iStage]) + e[iStage]*fix
+                cost_rev[iScen, iStage] = Battery_price_purchase[iStage]*(cap[iScen][vector_stages_index[iScen, iStage]+2]+rev_acquisto[iScen, iStage]) - Battery_price_sale[iStage]*(cap[iScen][vector_stages_index[iScen,iStage]+1]-rev_vendita[iScen, iStage]) + e[iScen, iStage]*fix
                 net_revenues_per_stage[iScen, iStage] = WEM_stage[iScen, iStage]-cost_rev[iScen, iStage]
             end
 
             WEM_stage[iScen, 1] = sum(vector_prices[iScen][iStep]*NHoursStep*(discharge[iScen][iStep]-charge[iScen][iStep]) for iStep=(vector_stages_index[iScen, 1]+1):(vector_stages_index[iScen, 2]))
-            cost_rev[iScen, 1] = Battery_price_purchase[1]*rev[iScen, 1] + e[iScen, iStages]*fix
+            cost_rev[iScen, 1] = Battery_price_purchase[1]*rev[iScen, 1] + e[iScen, 1]*fix
             net_revenues_per_stage[iScen, 1] = WEM_stage[iScen,1]-cost_rev[iScen,1]
 
             WEM_stage[iScen, NStages]= sum(vector_prices[iScen][iStep]*NHoursStep*(discharge[iScen][iStep]-charge[iScen][iStep]) for iStep=(vector_stages_index[iScen, NStages]+1):(vector_stages_index[iScen, NStages+1]))
-            cost_rev[iScen, NStages] = e[iScen, NStages]*fix + Battery_price_purchase[NStages]*(cap[vector_stages_index[iScen, NStages]+2]+rev_acquisto[iScen, NStages]) - Battery_price_sale[NStages+1]*(cap[iScen, end]-min_SOH) -Battery_price_sale[NStages]*(cap[vector_stages_index[iScen, NStages]+1]-rev_vendita[iScen, NStages])
+            cost_rev[iScen, NStages] = e[iScen, NStages]*fix + Battery_price_purchase[NStages]*(cap[iScen][vector_stages_index[iScen, NStages]+2]+rev_acquisto[iScen, NStages]) - Battery_price_sale[NStages+1]*(cap[iScen][end]-min_SOH) -Battery_price_sale[NStages]*(cap[iScen][vector_stages_index[iScen, NStages]+1]-rev_vendita[iScen, NStages])
             net_revenues_per_stage[iScen, NStages] = WEM_stage[iScen,NStages]-cost_rev[iScen, NStages]
         end
         

@@ -26,7 +26,7 @@ function Problem_OCRA_2(InputParameters::InputParam, SolverParameters::SolverPar
 
     @variable(M, 0 <= revamping[iStage=1:NStages] <= (max_SOH-min_SOH), base_name = "Revamping")
     @variable(M, min_SOH <= capacity[iStep=1:NSteps_sim+1] <= max_SOH, base_name = "Energy_Capacity")        #energy_Capacity     [iStage=1:NStages]
-    @variable(M, e[iStage=1:Stages], Bin, base_name = "Binary Revamp")
+    @variable(M, e[iStage=1:NStages], Bin, base_name = "Binary Revamp")
     
     @variable(M, 0<= rev_vendita[iStage=1:NStages] <= max_SOH, base_name = "Vendita rev")
     @variable(M, -max_SOH<= rev_acquisto[iStage=1:NStages] <= 0, base_name = "Acquisto rev")
@@ -103,7 +103,17 @@ function Problem_OCRA_2(InputParameters::InputParam, SolverParameters::SolverPar
     
     @constraint(M, stop_discharge[iStage in 2:NStages, iStep in (vector_stages_index[iScen,iStage]:(vector_stages_index[iScen,iStage]+vector_downtime_stages[iScen, iStage-1]))], discharge[iStep] <= (1-e[iStage])*max_P) 
 
-    
+    @constraint(M, rev[iStage=1:NStages], revamping[iStage] <= (max_SOH-min_SOH)*e[iStage])
+
+    # CONSTRAINT SU VARIABILI AUSILIARIE
+
+    @constraint(M, vendita[iStage=1], rev_vendita[iStage] == 0)
+    @constraint(M, vendita_1[iStage=2:NStages], rev_vendita[iStage] >= 0)
+    @constraint(M, vendita_2[iStage=2:NStages], rev_vendita[iStage] >= capacity[vector_stages_index[iScen,iStage]+1]- e[iStage]*Big)
+
+    @constraint(M, acquisto_1[iStage=2:NStages], rev_acquisto[iStage] >= -(1-e[iStage])*Big)
+    @constraint(M, acquisto_2[iStage=2:NStages], rev_acquisto[iStage] >= -capacity[vector_stages_index[iScen,iStage]+2] )
+    @constraint(M, acquisto_3[iStage=1], rev_acquisto[iStage] == 0)
 
     return Problem_OCRA2(
         M,

@@ -553,3 +553,115 @@ function statistical_analysis_5(ResultsOpt_5::Results_5, Results_ex_post::result
 end
 
 
+
+function analysis_OCRA_2(Results_OCRA_2::Results_OCRA2, Results_ex_post::results_ex_post, NScen, NStages)
+
+    @unpack (net_revenues_per_stage, WEM_stage, cost_rev, deg_stage, rev, cap) = Results_OCRA_2;
+    @unpack (vector_prices, vector_stages_index) = Results_ex_post;
+
+    Initial_capacity = zeros(NScen, NStages);
+    Final_capacity = zeros(NScen, NStages);
+
+    for iScen=1:NScen
+        for iStage=1:NStages
+            Initial_capacity[iScen, iStage] = cap[iScen][2]
+            Final_capacity[iScen, iStage] = cap[iScen][end]
+        end
+    end
+
+    #1=max, 2= min, 3= avg, 4 =median
+    WEM_rev_stat = zeros(NStages, 4)
+    cost_stat = zeros(NStages, 4)
+    net_rev_stat = zeros(NStages, 4)
+    deg_stat = zeros(NStages, 4)
+    Initial_cap_stat = zeros(NStages, 4)
+    Final_cap_stat = zeros(NStages, 4)
+
+    for iStage=1:NStages
+
+        # Calcolo valori massimi su NScen scenari
+        WEM_rev_stat[iStage,1] = findmax(WEM_stage[:,iStage])[1]
+        cost_stat[iStage,1] = findmax(cost_rev[:,iStage])[1]
+        net_rev_stat[iStage,1] = findmax(net_revenues_per_stage[:,iStage])[1]
+        deg_stat[iStage,1] = findmax(deg_stage[:,iStage])[1]
+        Initial_cap_stat[iStage,1] = findmax(Initial_capacity[:,iStage])[1]
+        Final_cap_stat[iStage,1] = findmax(Final_capacity[:,iStage])[1]
+
+        # Calcolo valori MINIMI su NScen scenari
+        WEM_rev_stat[iStage,2] = findmin(WEM_stage[:,iStage])[1]
+        cost_stat[iStage,2] = findmin(cost_rev[:,iStage])[1]
+        net_rev_stat[iStage,2] = findmin(net_revenues_per_stage[:,iStage])[1]
+        deg_stat[iStage,2] = findmin(deg_stage[:,iStage])[1]
+        Initial_cap_stat[iStage,2] = findmin(Initial_capacity[:,iStage])[1]
+        Final_cap_stat[iStage,2] = findmin(Final_capacity[:,iStage])[1]
+
+        # Calcolo valori MEDI su NScen scenari
+        WEM_rev_stat[iStage,3] = mean(WEM_stage[:,iStage])
+        cost_stat[iStage,3] = mean(cost_rev[:,iStage])
+        net_rev_stat[iStage,3] = mean(net_revenues_per_stage[:,iStage])
+        deg_stat[iStage,3] = mean(deg_stage[:,iStage])
+        Initial_cap_stat[iStage,3] = mean(Initial_capacity[:,iStage])
+        Final_cap_stat[iStage,3] = mean(Final_capacity[:,iStage])
+
+        # Calcolo valori MEDIANI su NScen scenari
+        WEM_rev_stat[iStage,4] = median(WEM_stage[:,iStage])
+        cost_stat[iStage,4] = median(cost_rev[:,iStage])
+        net_rev_stat[iStage,4] = median(net_revenues_per_stage[:,iStage])
+        deg_stat[iStage,4] = median(deg_stage[:,iStage])
+        Initial_cap_stat[iStage,4] = median(Initial_capacity[:,iStage])
+        Final_cap_stat[iStage,4] = median(Final_capacity[:,iStage])
+    end
+
+    WEM_rev_stat_frame = DataFrame()
+    cost_stat_frame = DataFrame()
+    net_rev_stat_frame = DataFrame()
+    deg_stat_frame = DataFrame()
+    Initial_cap_stat_frame = DataFrame()
+    Final_cap_stat_frame = DataFrame()
+
+    WEM_rev_stat_frame[!,"Stages"] = 1:1:NStages
+    WEM_rev_stat_frame[!,"Max"] = WEM_rev_stat[:,1]
+    WEM_rev_stat_frame[!,"Min"] = WEM_rev_stat[:,2]
+    WEM_rev_stat_frame[!,"Average"] = WEM_rev_stat[:,3]
+    WEM_rev_stat_frame[!,"Median"] = WEM_rev_stat[:,4]
+
+    cost_stat_frame[!,"Stages"] = 1:1:NStages
+    cost_stat_frame[!,"Max"] = cost_stat[:,1]
+    cost_stat_frame[!,"Min"] = cost_stat[:,2]
+    cost_stat_frame[!,"Average"] = cost_stat[:,3]
+    cost_stat_frame[!,"Median"] = cost_stat[:,4]
+
+    net_rev_stat_frame[!,"Stages"] = 1:1:NStages
+    net_rev_stat_frame[!,"Max"] = net_rev_stat[:,1]
+    net_rev_stat_frame[!,"Min"] = net_rev_stat[:,2]
+    net_rev_stat_frame[!,"Average"] = net_rev_stat[:,3]
+    net_rev_stat_frame[!,"Median"] = net_rev_stat[:,4]
+
+    deg_stat_frame[!,"Stages"] = 1:1:NStages
+    deg_stat_frame[!, "Max"] = deg_stat[:,1]
+    deg_stat_frame[!, "Min"] = deg_stat[:,2]
+    deg_stat_frame[!, "Average"] = deg_stat[:,3]
+    deg_stat_frame[!, "Median"] = deg_stat[:,4]
+
+    Initial_cap_stat_frame[!, "Stages"] =1:1:NStages
+    Initial_cap_stat_frame[!, "Max"] = Initial_cap_stat[:,1]
+    Initial_cap_stat_frame[!, "Min"] = Initial_cap_stat[:,2]
+    Initial_cap_stat_frame[!, "Average"] = Initial_cap_stat[:,3]
+    Initial_cap_stat_frame[!, "Median"] = Initial_cap_stat[:,4]
+
+    Final_cap_stat_frame[!, "Stages"] =1:1:NStages
+    Final_cap_stat_frame[!, "Max"] = Final_cap_stat[:,1]
+    Final_cap_stat_frame[!, "Min"] = Final_cap_stat[:,2]
+    Final_cap_stat_frame[!, "Average"] = Final_cap_stat[:,3]
+    Final_cap_stat_frame[!, "Median"] = Final_cap_stat[:,4]
+
+    return Data_analysed(
+        WEM_rev_stat_frame,
+        cost_stat_frame,
+        net_rev_stat_frame,
+        deg_stat_frame,
+        Initial_cap_stat_frame,
+        Final_cap_stat_frame,
+    )
+end
+
