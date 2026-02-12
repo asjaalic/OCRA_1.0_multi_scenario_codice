@@ -26,6 +26,8 @@ end
     min_SOH::F                                     # Minimum SOH to be respected by contract
     Nfull::I                                       # Maximum number of full cycles for DoD=100%     
     downtime::I
+    fix::F
+    cost::F
 end
   
 # solver parameters
@@ -417,6 +419,8 @@ struct Problem_OCRA2
     capacity::Any
     revamping::Any
     e::Any
+    rev_vendita::Any
+    rev_acquisto::Any
     
 end
 
@@ -442,6 +446,7 @@ struct Results_OCRA2
     w_zy::Any
     rev::Any
     cap::Any
-    t::Any
-
+    e::Any
+    rev_vendita::Any
+    rev_acquisto::Any
 end

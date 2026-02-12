@@ -1,11 +1,11 @@
 
 #problem definition
     NYears = 10
-    NMonths = 6
+    NMonths = 12
     NHoursStep = 1.0
 
 #General
-    Big = 1.02
+    Big = 1.15
     conv = 0.001
     bin = 3
 

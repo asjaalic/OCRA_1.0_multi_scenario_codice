@@ -10,6 +10,9 @@
     min_SOH = 1
     Nfull = 10000
     downtime = 504
+    fix = 950
+    cost = 0.985
+
 
 
 

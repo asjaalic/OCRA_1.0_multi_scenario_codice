@@ -26,8 +26,8 @@ include("problem_without_deg.jl")
 include("solveOptimizationAlgorithm.jl")      
 include("ProblemFormulationInequalities.jl") 
 
-include("OCRA_2_Stage_problem.jl")
 include("solve_OCRA_2.jl")
+include("OCRA_2_Stage_problem.jl")
 
 include("Ex_post analysis.jl")
 
@@ -50,19 +50,21 @@ to = TimerOutput()
 
   # Upload battery's characteristics
   Battery = set_battery_system(runMode, case)
-  @unpack (min_SOC, max_SOC, Eff_charge, Eff_discharge, min_P, max_P, max_SOH, min_SOH, Nfull) = Battery; 
+  @unpack (min_SOC, max_SOC, Eff_charge, Eff_discharge, min_P, max_P, max_SOH, min_SOH, Nfull, downtime, fix, cost) = Battery; 
 
   # Set solver parameters (Gurobi etc)
   SolverParameters = set_solverParameters()
 
   # Set BESS revamping costs 
   Battery_price_purchase = read_csv("Battery_decreasing_prices_mid.csv",case.DataPath) 
+  Battery_price_sale = set_price(Battery_price_purchase,cost);
  
   # Set scenarios to simulate
-  Pp = read_csv("100_scenarios_non_negative.csv", case.DataPath);
+  Pp = read_csv("5_scenari.csv", case.DataPath); #100_scenarios_non_negative
   NScen = size(Pp)[2]
   NSteps = size(Pp)[1]
-  Steps_stages = [0 4380 8760 13140 17520 21900 26280 30660 35040 39420 43800 48180 52560 56940 61320 65700 70080 74460 78840 83220 87600]
+  Steps_stages = [0 8760 17520 26280 35040 43800 52560 61320 70080 78840 87600]
+  #[0 4380 8760 13140 17520 21900 26280 30660 35040 39420 43800 48180 52560 56940 61320 65700 70080 74460 78840 83220 87600]
  #[0 4344 8760 13104 17520 21864 26280 30624 35040 39384 43800 48144 52560 56904 61320 65664 70080 74424 78840 83184 87600]
  
   # Where and how to save the results
@@ -123,7 +125,7 @@ end
     if bin !=3
       error("You have to re-run the normal problem with only 3 binary variables!")
     else
-      Results_OCRA_2 = solveOCRA_2()
+      Results_OCRA_2 = solveOCRA_2(InputParameters, SolverParameters, Battery, NScen, Results_ex_post)
     end
   end
 end

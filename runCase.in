@@ -1,6 +1,6 @@
 DataPath = C:\\GitHub_Asja\\Ocra_1.0_multi_scenario
-InputPath =  C:\\GitHub_Asja\\OCRA_multi_scenario
-ResultPath =  C:\\GitHub_Asja\\OCRA_multi_scenario
+InputPath =  C:\\GitHub_Asja\\Ocra_1.0_multi_scenario
+ResultPath =  C:\\GitHub_Asja\\Ocra_1.0_multi_scenario
 #ending to case name 
 CaseName = _Version_exact_inequalities
 
