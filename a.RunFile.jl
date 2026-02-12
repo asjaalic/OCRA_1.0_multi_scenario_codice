@@ -53,10 +53,10 @@ to = TimerOutput()
   SolverParameters = set_solverParameters()
 
   # Set BESS revamping costs 
-  Battery_price_purchase = read_csv("Battery_decreasing_prices_high.csv",case.DataPath) 
+  Battery_price_purchase = read_csv("Battery_decreasing_prices_mid.csv",case.DataPath) 
  
   # Set scenarios to simulate
-  Pp = read_csv("5_scenari.csv", case.DataPath);
+  Pp = read_csv("100_scenarios_non_negative.csv", case.DataPath);
   NScen = size(Pp)[2]
   NSteps = size(Pp)[1]
   Steps_stages = [0 4380 8760 13140 17520 21900 26280 30660 35040 39420 43800 48180 52560 56940 61320 65700 70080 74460 78840 83220 87600]
@@ -95,7 +95,7 @@ end
 
 main=0
 @timeit to "Save results WITHOUT degradation" begin
-  cartella = "C:\\Users\\Utente\\Desktop\\ASJA\\OCRA_1.0_UNI_PAVIA\\Risultati_completo"
+  cartella = "C:\\GitHub_Asja\\Ocra_1.0_multi_scenario\\Results_multi_scenario"
   cd(cartella)
   if bin == 3
     main = data_saving_without_deg_3(Results_No_Deg_3, Results_ex_post, NSteps, NStages)

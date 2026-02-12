@@ -5,7 +5,7 @@
     NHoursStep = 1.0
 
 #General
-    Big = 1.05
+    Big = 1.02
     conv = 0.001
-    bin = 5
+    bin = 3
 

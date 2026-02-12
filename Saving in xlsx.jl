@@ -10,7 +10,7 @@ function data_saving_3(InputParameters::InputParam, ResultsOpt_3::Results_3, Res
     hour=string(now())
     a=replace(hour,':'=> '-')
 
-    nameF= "$max_SOH SoH_max, $min_SOC SoC_min, mid-cost projections N=7 new, filtrato"
+    nameF= "$max_SOH SoH_max, mid-cost proj, non_negative"
     folder = "$nameF"
     mkdir(folder)
     cd(folder)
