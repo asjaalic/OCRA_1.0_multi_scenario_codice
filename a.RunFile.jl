@@ -41,7 +41,7 @@ to = TimerOutput()
   #Set run case - indirizzi delle cartelle di input ed output
   case = set_runCase()
 
-  @unpack (DataPath,InputPath,ResultPath,CaseName) = case;
+  @unpack (DataPath,InputPath,ResultPath,CaseName, Results_JLD) = case;
 
   # Set run mode (how and what to run) and Input parameters
   runMode = read_runMode_file()
@@ -69,9 +69,6 @@ to = TimerOutput()
   #[0 4380 8760 13140 17520 21900 26280 30660 35040 39420 43800 48180 52560 56940 61320 65700 70080 74460 78840 83220 87600]
  #[0 4344 8760 13104 17520 21864 26280 30624 35040 39384 43800 48144 52560 56904 61320 65664 70080 74424 78840 83184 87600]
  
-  # Where and how to save the results
-  FinalResPath= set_run_name(case, ResultPath, NSteps)
-
 end
 
 @timeit to "Solve problem WITHOUT degradation" begin
@@ -100,16 +97,24 @@ end
   end
 end
 
+PathJLDFiles = set_run_name(run_mode, Results_JLD, Configuration)
+
 main=0
 @timeit to "Save results WITHOUT degradation" begin
-  cartella = "C:\\GitHub_Asja\\Ocra_1.0_multi_scenario\\Results_multi_scenario"
-  cd(cartella)
+  #cartella = "C:\\GitHub_Asja\\Ocra_1.0_multi_scenario\\Results_multi_scenario"
+  cd(ResultsPath)
   if bin == 3
     main = data_saving_without_deg_3(Results_No_Deg_3, Results_ex_post, NSteps, NStages)
+    save(joinpath(PathJLDFiles, "Results_No_deg_3.jld"), "Results_No_Deg_3", Results_No_Deg_3)
+    save(joinpath(PathJLDFiles, "Results_ex_post.jld"), "Results_ex_post", Results_ex_post)
   elseif bin == 4
     main = data_saving_without_deg_4(Results_No_Deg_4, Results_ex_post, NSteps, NStages)
+    save(joinpath(PathJLDFiles, "Results_No_Deg_4.jld"), "Results_No_Deg_4", Results_No_Deg_4)
+    save(joinpath(PathJLDFiles, "Results_ex_post.jld"), "Results_ex_post", Results_ex_post)
   else
     main = data_saving_without_deg_5(Results_No_Deg_5, Results_ex_post, NSteps, NStages)
+    save(joinpath(PathJLDFiles, "Results_No_Deg_5.jld"), "Results_No_Deg_5", Results_No_Deg_5)
+    save(joinpath(PathJLDFiles, "Results_ex_post.jld"), "Results_ex_post", Results_ex_post)
   end
 end
 

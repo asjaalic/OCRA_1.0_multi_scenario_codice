@@ -44,6 +44,7 @@ end
     DataPath::S
     InputPath::S
     ResultPath::S
+    Results_JLD::S
     CaseName::S
 end
 
