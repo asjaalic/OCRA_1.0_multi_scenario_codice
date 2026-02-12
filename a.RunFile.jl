@@ -26,6 +26,9 @@ include("problem_without_deg.jl")
 include("solveOptimizationAlgorithm.jl")      
 include("ProblemFormulationInequalities.jl") 
 
+include("OCRA_2_Stage_problem.jl")
+include("solve_OCRA_2.jl")
+
 include("Ex_post analysis.jl")
 
 date = string(today())
@@ -108,34 +111,50 @@ end
 
 
 @timeit to "Solve optimization problem WITH degradation" begin
-  if bin == 3
-    ResultsOpt_3 = solveOptimizationProblem_3(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
-  elseif bin == 4
-    ResultsOpt_4 = solveOptimizationProblem_4(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
-  else
-    ResultsOpt_5 = solveOptimizationProblem_5(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
+  if OCRA_1 #if this is true, we solve the OCRA 1.0
+    if bin == 3
+      ResultsOpt_3 = solveOptimizationProblem_3(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
+    elseif bin == 4
+      ResultsOpt_4 = solveOptimizationProblem_4(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
+    else
+      ResultsOpt_5 = solveOptimizationProblem_5(InputParameters, SolverParameters, Battery, NScen, Results_ex_post);
+    end
+  else  #OTHERWISE WE SOLVE THE OCRA 2 BUT ONLY WITH THREE VARIABLES
+    if bin !=3
+      error("You have to re-run the normal problem with only 3 binary variables!")
+    else
+      Results_OCRA_2 = solveOCRA_2()
+    end
   end
 end
 
 @timeit to "Evaluate results WITH degradation: statistical analysis" begin
-  if bin == 3
-    Results_statistics = statistical_analysis_3(ResultsOpt_3, Results_ex_post, NScen, NStages)
-  elseif bin == 4
-    Results_statistics = statistical_analysis_4(ResultsOpt_4, Results_ex_post, NScen, NStages)
+  if OCRA_1
+    if bin == 3
+      Results_statistics = statistical_analysis_3(ResultsOpt_3, Results_ex_post, NScen, NStages)
+    elseif bin == 4
+      Results_statistics = statistical_analysis_4(ResultsOpt_4, Results_ex_post, NScen, NStages)
+    else
+      Results_statistics = statistical_analysis_5(ResultsOpt_5, Results_ex_post, NScen, NStages)
+    end
   else
-    Results_statistics = statistical_analysis_5(ResultsOpt_5, Results_ex_post, NScen, NStages)
+      Results_statistics_OCRA_2 = analysis_OCRA_2(Results_OCRA_2, Results_ex_post, NScen, NStages)
   end
 end
 
 # SAVE DATA IN EXCEL FILES
 if runMode.excel_savings
   cd(main)
-  if bin == 3
-    Saving = data_saving_3(InputParameters, ResultsOpt_3, Results_ex_post, Results_statistics, Battery, NScen)
-  elseif bin == 4
-    Saving = data_saving_4(InputParameters, ResultsOpt_4, Results_ex_post, Results_statistics, Battery, NScen)
+  if OCRA_1
+    if bin == 3
+      Saving = data_saving_3(InputParameters, ResultsOpt_3, Results_ex_post, Results_statistics, Battery, NScen)
+    elseif bin == 4
+      Saving = data_saving_4(InputParameters, ResultsOpt_4, Results_ex_post, Results_statistics, Battery, NScen)
+    else
+      Saving = data_saving_5(InputParameters, ResultsOpt_5, Results_ex_post, Results_statistics, Battery, NScen)
+    end
   else
-    Saving = data_saving_5(InputParameters, ResultsOpt_5, Results_ex_post, Results_statistics, Battery, NScen)
+      Saving_OCRA_2 = saving_OCRA_2(InputParameters, Results_OCRA_2, results_ex_post, Results_statistics_OCRA_2, Battery, NScen)
   end
 else
   println("Solved without saving results in xlsx format.")

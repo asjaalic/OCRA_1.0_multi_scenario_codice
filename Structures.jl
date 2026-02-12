@@ -57,6 +57,7 @@ end
     setInputParameters::B             #from .in file
  
     excel_savings::B 
+    OCRA_1::B
 
 end
 
@@ -394,4 +395,53 @@ struct ResultWithoutDeg_5
     w_ty_no_deg::Any
     w_tz_no_deg::Any
     w_tu_no_deg::Any
+end
+
+# Optimization problem
+struct Problem_OCRA2
+    M::Any
+    soc::Any
+    soc_quad::Any
+    charge::Any 
+    discharge::Any
+    deg::Any
+    x::Any
+    y::Any
+    z::Any
+    w_xx::Any
+    w_yy::Any
+    w_zz::Any
+    w_xy::Any
+    w_xz::Any
+    w_zy::Any
+    capacity::Any
+    revamping::Any
+    e::Any
+    
+end
+
+struct Results_OCRA2
+    objective::Any
+    net_revenues_per_stage::Any
+    WEM_stage::Any
+    cost_rev::Any
+    deg_stage::Any
+    soc::Any
+    charge::Any
+    discharge::Any
+    deg::Any
+    soc_quad::Any
+    x::Any
+    y::Any
+    z::Any
+    w_xx::Any
+    w_yy::Any
+    w_zz::Any
+    w_xy::Any
+    w_xz::Any
+    w_zy::Any
+    rev::Any
+    cap::Any
+    t::Any
+
 end

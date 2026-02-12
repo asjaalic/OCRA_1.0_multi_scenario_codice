@@ -1,6 +1,7 @@
 # Set input
     # from .in file, else from jld file
     setInputParameters = true
+    OCRA_1 = false
 
     # from input files, else from jld inputhpath
     batterySystemFromFile = true
