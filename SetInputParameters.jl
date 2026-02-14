@@ -377,20 +377,19 @@ end
 
 # set case run name for saving results
 
-function set_run_name(case, ResultPath, NSteps)
+function set_run_name(ResultPath, NSteps, NScen)
 
   n=NSteps
-  param = string("NSteps_",n)
+  param = string("No_deg_value_NSteps_",n, "NSCen_," $NScen)
 
-  Finalpath = joinpath(ResultPath, splitdir(case.DataPath)[end])
-  Finalpath = joinpath(Finalpath, param)
+  PathJLDFiles = joinpath(ResultPath ) #splitdir(ResultPath)[end]
+  PathJLDFiles = joinpath(PathJLDFiles, param)
 
-  runName = string(date, case.CaseName)
+  runName = string(date)
 
-  println(string("Run name: ", runName))
-  println(string("Result directory: ", joinpath(Finalpath, runName)))
+  println(string("Result directory: ", joinpath(PathJLDFiles, runName)))
 
-  return joinpath(Finalpath, runName)
+  return PathJLDFiles
 end
 
 

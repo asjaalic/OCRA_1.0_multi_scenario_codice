@@ -97,12 +97,12 @@ end
   end
 end
 
-PathJLDFiles = set_run_name(run_mode, Results_JLD, Configuration)
+PathJLDFiles = set_run_name(Results_JLD, NSteps, NScen)
 
 main=0
 @timeit to "Save results WITHOUT degradation" begin
   #cartella = "C:\\GitHub_Asja\\Ocra_1.0_multi_scenario\\Results_multi_scenario"
-  cd(ResultsPath)
+  cd(ResultPath)
   if bin == 3
     main = data_saving_without_deg_3(Results_No_Deg_3, Results_ex_post, NSteps, NStages)
     save(joinpath(PathJLDFiles, "Results_No_deg_3.jld"), "Results_No_Deg_3", Results_No_Deg_3)
@@ -113,7 +113,7 @@ main=0
     save(joinpath(PathJLDFiles, "Results_ex_post.jld"), "Results_ex_post", Results_ex_post)
   else
     main = data_saving_without_deg_5(Results_No_Deg_5, Results_ex_post, NSteps, NStages)
-    save(joinpath(PathJLDFiles, "Results_No_Deg_5.jld"), "Results_No_Deg_5", Results_No_Deg_5)
+    save(joinpath(PathJLDFiles, "Results_No_Deg_.jld"), "Results_No_Deg_5", Results_No_Deg_5)
     save(joinpath(PathJLDFiles, "Results_ex_post.jld"), "Results_ex_post", Results_ex_post)
   end
 end
