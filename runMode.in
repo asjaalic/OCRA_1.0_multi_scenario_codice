@@ -5,6 +5,7 @@
 
     # from input files, else from jld inputhpath
     batterySystemFromFile = true
+    filtered_WEM_from_file = true
 
     excel_savings = true
 

@@ -11,7 +11,7 @@
     Nfull = 10000
     downtime = 504
     fix = 950
-    cost = 0.985
+    cost = 0.95
 
 
 

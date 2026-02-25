@@ -45,7 +45,7 @@ end
     InputPath::S
     ResultPath::S
     Results_JLD::S
-    CaseName::S
+    from_File::S
 end
 
 # runMode Parameters
@@ -61,6 +61,8 @@ end
  
     excel_savings::B 
     OCRA_1::B
+
+    filtered_WEM_from_file::B
 
 end
 
