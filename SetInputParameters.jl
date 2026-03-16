@@ -380,7 +380,7 @@ end
 function set_run_name(ResultPath, NSteps, NScen)
 
   n=NSteps
-  param = string("No_deg_value_NSteps_",n, "NSCen_," $NScen)
+  param = string("No_deg_value_NSteps_",n, "NScen_,",NScen)
 
   PathJLDFiles = joinpath(ResultPath ) #splitdir(ResultPath)[end]
   PathJLDFiles = joinpath(PathJLDFiles, param)

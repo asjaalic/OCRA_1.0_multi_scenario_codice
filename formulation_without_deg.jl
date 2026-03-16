@@ -9,7 +9,7 @@ function BuildStageProblemNoDeg_3(InputParameters::InputParam, SolverParameters:
     disc = 7
 
     M_sim = Model(Gurobi.Optimizer)
-    set_optimizer_attribute(M_sim, "MIPGap", 0.01)
+    set_optimizer_attribute(M_sim, "MIPGap", 0.05)
 
     # DEFINE VARIABLES
     @variable(M_sim, min_SOC <= soc[iStep=1:NSteps+1] <= max_SOC, base_name = "Energy")                # MWh   energy_Capacity NSteps
@@ -104,7 +104,7 @@ function BuildStageProblemNoDeg_4(InputParameters::InputParam, SolverParameters:
     disc = 15
 
     M_sim = Model(Gurobi.Optimizer)
-    set_optimizer_attribute(M_sim, "MIPGap", 0.01)
+    set_optimizer_attribute(M_sim, "MIPGap", 0.05)
 
     # DEFINE VARIABLES
     @variable(M_sim, min_SOC <= soc[iStep=1:NSteps+1] <= max_SOC, base_name = "Energy")                # MWh   energy_Capacity NSteps
@@ -223,7 +223,7 @@ function BuildStageProblemNoDeg_5(InputParameters::InputParam, SolverParameters:
     disc = 31
 
     M_sim = Model(Gurobi.Optimizer)
-    set_optimizer_attribute(M_sim, "MIPGap", 0.01)
+    set_optimizer_attribute(M_sim, "MIPGap", 0.05)
 
     # DEFINE VARIABLES
     @variable(M_sim, min_SOC <= soc[iStep=1:NSteps+1] <= max_SOC, base_name = "Energy")                # MWh   energy_Capacity NSteps

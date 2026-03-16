@@ -131,12 +131,12 @@ function data_saving_without_deg_3(Results_No_Deg_3::ResultWithoutDeg_3, Results
     @unpack (revenues_per_stage_no_deg, soc_no_deg, soc_quad_no_deg, charge_no_deg, discharge_no_deg, x_no_deg, y_no_deg,z_no_deg) = Results_No_Deg_3;
     @unpack (deg_singola, deg_stage, costo_stage, net_revenues, vector_prices, vector_stages_index, vector_downtime_stages) = Results_ex_post;
 
-    cart = "New $NScen scenario, 3 bin"
+    cart = "New $NScen scenario, 3 bin, mu=0.95"
     mkdir(cart)
     cd(cart)
     main = pwd()
 
-    c = "Risultati senza degradazione, $max_SOH SoH_max, $min_SOC SoC_min, imd cost"
+    c = "Risultati senza degradazione, $max_SOH SoH_max, mu= 0.95"
     mkdir(c)
     cd(c)
     
@@ -688,7 +688,7 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     hour=string(now())
     a=replace(hour,':'=> '-')
 
-    nameF= "OCRA 2 filtrato $NScen scenari, E_Max=$max_SOH "
+    nameF= "OCRA 2 filtrato $NScen scenari, E_Max=$max_SOH, mu=0.95 "
     folder = "$nameF"
     mkdir(folder)
     cd(folder)
