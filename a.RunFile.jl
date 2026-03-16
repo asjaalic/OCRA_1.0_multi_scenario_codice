@@ -124,6 +124,8 @@ else
 
   Results_ex_post = load(joinpath(from_File, "Results_ex_post.jld"))["Results_ex_post"]
 
+end
+
   @timeit to "Solve optimization problem WITH degradation" begin
     if OCRA_1 #if this is true, we solve the OCRA 1.0
       if bin == 3
@@ -158,7 +160,7 @@ else
 
   # SAVE DATA IN EXCEL FILES
   if runMode.excel_savings
-    cd(main)
+    cd(ResultPath)
     if OCRA_1
       if bin == 3
         Saving = data_saving_3(InputParameters, ResultsOpt_3, Results_ex_post, Results_statistics, Battery, NScen)
@@ -174,7 +176,7 @@ else
     println("Solved without saving results in xlsx format.")
   end
 
-end
+
 
 #end
 print(to)

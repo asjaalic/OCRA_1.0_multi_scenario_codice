@@ -574,6 +574,7 @@ function analysis_OCRA_2(Results_OCRA_2::Results_OCRA2, Results_ex_post::results
     cost_stat = zeros(NStages, 4)
     net_rev_stat = zeros(NStages, 4)
     deg_stat = zeros(NStages, 4)
+    rev_stat = zeros(NStages,4)
     Initial_cap_stat = zeros(NStages, 4)
     Final_cap_stat = zeros(NStages, 4)
 
@@ -584,6 +585,7 @@ function analysis_OCRA_2(Results_OCRA_2::Results_OCRA2, Results_ex_post::results
         cost_stat[iStage,1] = findmax(cost_rev[:,iStage])[1]
         net_rev_stat[iStage,1] = findmax(net_revenues_per_stage[:,iStage])[1]
         deg_stat[iStage,1] = findmax(deg_stage[:,iStage])[1]
+        rev_stat[iStage,1] = findmax(rev[:,iStage])[1]
         Initial_cap_stat[iStage,1] = findmax(Initial_capacity[:,iStage])[1]
         Final_cap_stat[iStage,1] = findmax(Final_capacity[:,iStage])[1]
 
@@ -592,6 +594,7 @@ function analysis_OCRA_2(Results_OCRA_2::Results_OCRA2, Results_ex_post::results
         cost_stat[iStage,2] = findmin(cost_rev[:,iStage])[1]
         net_rev_stat[iStage,2] = findmin(net_revenues_per_stage[:,iStage])[1]
         deg_stat[iStage,2] = findmin(deg_stage[:,iStage])[1]
+        rev_stat[iStage,2] = findmin(rev[:,iStage])[1]
         Initial_cap_stat[iStage,2] = findmin(Initial_capacity[:,iStage])[1]
         Final_cap_stat[iStage,2] = findmin(Final_capacity[:,iStage])[1]
 
@@ -600,6 +603,7 @@ function analysis_OCRA_2(Results_OCRA_2::Results_OCRA2, Results_ex_post::results
         cost_stat[iStage,3] = mean(cost_rev[:,iStage])
         net_rev_stat[iStage,3] = mean(net_revenues_per_stage[:,iStage])
         deg_stat[iStage,3] = mean(deg_stage[:,iStage])
+        rev_stat[iStage,3] = mean(rev[:,iStage])
         Initial_cap_stat[iStage,3] = mean(Initial_capacity[:,iStage])
         Final_cap_stat[iStage,3] = mean(Final_capacity[:,iStage])
 
@@ -608,6 +612,7 @@ function analysis_OCRA_2(Results_OCRA_2::Results_OCRA2, Results_ex_post::results
         cost_stat[iStage,4] = median(cost_rev[:,iStage])
         net_rev_stat[iStage,4] = median(net_revenues_per_stage[:,iStage])
         deg_stat[iStage,4] = median(deg_stage[:,iStage])
+        rev_stat[iStage,4] = median(rev[:,iStage])
         Initial_cap_stat[iStage,4] = median(Initial_capacity[:,iStage])
         Final_cap_stat[iStage,4] = median(Final_capacity[:,iStage])
     end
@@ -616,6 +621,7 @@ function analysis_OCRA_2(Results_OCRA_2::Results_OCRA2, Results_ex_post::results
     cost_stat_frame = DataFrame()
     net_rev_stat_frame = DataFrame()
     deg_stat_frame = DataFrame()
+    rev_stat_frame = DataFrame()
     Initial_cap_stat_frame = DataFrame()
     Final_cap_stat_frame = DataFrame()
 
@@ -643,6 +649,12 @@ function analysis_OCRA_2(Results_OCRA_2::Results_OCRA2, Results_ex_post::results
     deg_stat_frame[!, "Average"] = deg_stat[:,3]
     deg_stat_frame[!, "Median"] = deg_stat[:,4]
 
+    rev_stat_frame[!,"Stages"] = 1:1:NStages
+    rev_stat_frame[!, "Max"] = rev_stat[:,1]
+    rev_stat_frame[!, "Min"] = rev_stat[:,2]
+    rev_stat_frame[!, "Average"] = rev_stat[:,3]
+    rev_stat_frame[!, "Median"] = rev_stat[:,4]
+
     Initial_cap_stat_frame[!, "Stages"] =1:1:NStages
     Initial_cap_stat_frame[!, "Max"] = Initial_cap_stat[:,1]
     Initial_cap_stat_frame[!, "Min"] = Initial_cap_stat[:,2]
@@ -660,6 +672,7 @@ function analysis_OCRA_2(Results_OCRA_2::Results_OCRA2, Results_ex_post::results
         cost_stat_frame,
         net_rev_stat_frame,
         deg_stat_frame,
+        rev_stat_frame,
         Initial_cap_stat_frame,
         Final_cap_stat_frame,
     )

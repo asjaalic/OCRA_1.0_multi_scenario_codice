@@ -12,7 +12,7 @@ function BuildStageProblem_3(InputParameters::InputParam, SolverParameters::Solv
     Small = 0.64
 
     M = Model(Gurobi.Optimizer)
-    set_optimizer_attribute(M, "MIPGap", 0.05)
+    set_optimizer_attribute(M, "MIPGap", 0.01)
 
     # DEFINE VARIABLES
 
@@ -131,7 +131,7 @@ function BuildStageProblem_4(InputParameters::InputParam, SolverParameters::Solv
     Small = 1
 
     M = Model(Gurobi.Optimizer)
-    set_optimizer_attribute(M, "MIPGap", 0.05)
+    set_optimizer_attribute(M, "MIPGap", 0.01)
 
     # DEFINE VARIABLES
 
@@ -278,7 +278,7 @@ function BuildStageProblem_5(InputParameters::InputParam, SolverParameters::Solv
     Small = 0.64
 
     M = Model(Gurobi.Optimizer)
-    set_optimizer_attribute(M, "MIPGap", 0.05)
+    set_optimizer_attribute(M, "MIPGap", 0.01)
 
     # DEFINE VARIABLES
 

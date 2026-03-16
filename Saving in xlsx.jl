@@ -131,7 +131,7 @@ function data_saving_without_deg_3(Results_No_Deg_3::ResultWithoutDeg_3, Results
     @unpack (revenues_per_stage_no_deg, soc_no_deg, soc_quad_no_deg, charge_no_deg, discharge_no_deg, x_no_deg, y_no_deg,z_no_deg) = Results_No_Deg_3;
     @unpack (deg_singola, deg_stage, costo_stage, net_revenues, vector_prices, vector_stages_index, vector_downtime_stages) = Results_ex_post;
 
-    cart = "New $NScen scenario, 3 bin, mu=0.95"
+    cart = "SEST_final_scenario_3_bin_mu_0.95_MipGap_1"
     mkdir(cart)
     cd(cart)
     main = pwd()
@@ -682,13 +682,13 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     @unpack (charge, discharge, rev, cap, soc, soc_quad, deg, deg_stage, WEM_stage, cost_rev, net_revenues_per_stage, x, y, z, w_xx, w_yy, w_zz, w_xy, w_xz, w_zy, e, rev_vendita, rev_acquisto) = Results_OCRA_2;
 
     @unpack (vector_prices, vector_stages_index, NSteps_scenario) = Results_ex_post;
-    @unpack (WEM_rev_stat_frame, cost_stat_frame, net_rev_stat_frame, deg_stat_frame, Initial_cap_stat_frame, Final_cap_stat_frame) = Results_statistics_OCRA_2;
+    @unpack (WEM_rev_stat_frame, cost_stat_frame, net_rev_stat_frame, deg_stat_frame, rev_stat_frame, Initial_cap_stat_frame, Final_cap_stat_frame) = Results_statistics_OCRA_2;
     @unpack (min_SOC, max_SOC, min_P, max_P, Eff_charge, Eff_discharge, max_SOH, min_SOH, Nfull, fix, cost) = Battery ; 
 
     hour=string(now())
     a=replace(hour,':'=> '-')
 
-    nameF= "OCRA 2 filtrato $NScen scenari, E_Max=$max_SOH, mu=0.95 "
+    nameF= "OCRA 2 filtrato $NScen scenari, E_Max_$max_SOH, mu=0.95_primo_rev "
     folder = "$nameF"
     mkdir(folder)
     cd(folder)
@@ -737,6 +737,7 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     Revamping_costs = (collect(DataFrames.eachcol(cost_stat_frame)),DataFrames.names(cost_stat_frame)),
     Net_revenues = (collect(DataFrames.eachcol(net_rev_stat_frame)),DataFrames.names(net_rev_stat_frame)),
     Degradation = (collect(DataFrames.eachcol(deg_stat_frame)),DataFrames.names(deg_stat_frame)),
+    Revamping = (collect(DataFrames.eachcol(rev_stat_frame)),DataFrames.names(rev_stat_frame)),
     Initial_capacity = (collect(DataFrames.eachcol(Initial_cap_stat_frame)),DataFrames.names(Initial_cap_stat_frame)),
     Final_capacity = (collect(DataFrames.eachcol(Final_cap_stat_frame)),DataFrames.names(Final_cap_stat_frame)),
 

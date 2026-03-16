@@ -1,6 +1,6 @@
-DataPath = C:\\GitHub_Asja\\Ocra_1.0_multi_scenario
-InputPath =  C:\\GitHub_Asja\\Ocra_1.0_multi_scenario
-ResultPath =  C:\\GitHub_Asja\\Ocra_1.0_multi_scenario\\Results_12_02
-Results_JLD = C:\\GitHub_Asja\\Ocra_1.0_multi_scenario\\Results_JLD
-from_File= C:\\GitHub\\OCRA_multi_scenario\\Results_JLD\\No_deg_value_NSteps_87600
+DataPath = C:\\GitHub\\OCRA_multi_scenario
+InputPath =  C:\\GitHub\\OCRA_multi_scenario
+ResultPath =  C:\\GitHub\\OCRA_multi_scenario\\Results_multi_scenario
+Results_JLD = C:\\GitHub\\OCRA_multi_scenario\\Results_JLD
+from_File= C:\\GitHub\\OCRA_multi_scenario\\Results_JLD\\No_deg_value_NSteps_87600NScen_100
 

@@ -166,6 +166,7 @@ struct Data_analysed
     cost_stat_frame::Any
     net_rev_stat_frame::Any
     deg_stat_frame::Any
+    rev_stat_frame::Any
     Initial_cap_stat_frame::Any
     Final_cap_stat_frame::Any
 end
