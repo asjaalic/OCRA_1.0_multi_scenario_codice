@@ -380,7 +380,7 @@ end
 function set_run_name(ResultPath, NSteps, NScen)
 
   n=NSteps
-  param = string("Final_SEST_No_deg_NSteps_",n, "NScen_,",NScen, "MipGap,",1)
+  param = string("Final_SEST_No_deg_NSteps_",n, "NScen_,",NScen, "MipGap",1)
 
   PathJLDFiles = joinpath(ResultPath ) #splitdir(ResultPath)[end]
   PathJLDFiles = joinpath(PathJLDFiles, param)

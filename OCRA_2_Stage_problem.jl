@@ -96,7 +96,7 @@ function Problem_OCRA_2(InputParameters::InputParam, SolverParameters::SolverPar
     @constraint(M, energy_capacity[iStage=1:NStages], capacity[vector_stages_index[iScen, iStage]+2] == capacity[vector_stages_index[iScen,iStage]+1]-deg[vector_stages_index[iScen, iStage]+1]*k+revamping[iStage])
    
     @constraint(M, initial_e[iStep=1], capacity[iStep] == min_SOH) #max_SOH
-    @constraint(M, initial_binary[iStage=1], e[iStage] == 1) #max_SOH
+    #@constraint(M, initial_binary[iStage=1], e[iStage] == 1) #max_SOH
 
     @constraint(M,en_cap[iStage in 1:NStages, iStep in ((vector_stages_index[iScen,iStage]+2):vector_stages_index[iScen,iStage+1])], capacity[iStep+1]== capacity[iStep]-deg[iStep]*k) 
 
