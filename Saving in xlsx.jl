@@ -707,7 +707,7 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     tot_rev = zeros(NScen) #NScen
     initial_cap = zeros(NScen) #NScen
 
-    for iScen=1:NScen#NScen
+    for iScen=1:NScen #NScen
         tot_WEM_rev[iScen] = sum(WEM_stage[iScen,:])
         tot_rev_costs[iScen] = sum(cost_rev[iScen,:])
         tot_net_rev[iScen] = sum(net_revenues_per_stage[iScen,:])
@@ -729,7 +729,7 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     box_whiskers_costs = DataFrame()
     box_whiskers_net = DataFrame()
 
-    for iScen=1:20#NScen
+    for iScen=1:NScen
         box_whiskers_WEM[!,"Scen $iScen"] = WEM_stage[iScen,:]
         box_whiskers_costs[!,"Scen $iScen"] = cost_rev[iScen,:]
         box_whiskers_net[!,"Scen $iScen"] = net_revenues_per_stage[iScen,:]
@@ -750,8 +750,8 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     net_rev = (collect(DataFrames.eachcol(box_whiskers_net)),DataFrames.names(box_whiskers_net)),
     )
 
-    initial_cap_stage = zeros(20, NStages) #NScen
-    final_cap_stage = zeros(20, NStages) #NScen
+    initial_cap_stage = zeros(NScen, NStages) #NScen
+    final_cap_stage = zeros(NScen, NStages) #NScen
 
     indice_uno= 0
     indice_due = 0
