@@ -6,6 +6,13 @@ function solveOCRA_2(InputParameters::InputParam, SolverParameters::SolverParam,
     @unpack (min_SOC, max_SOC, Eff_charge, Eff_discharge, min_P, max_P, max_SOH, min_SOH, Nfull, fix,cost ) = Battery;
     @unpack (vector_prices, vector_stages_index, NSteps_scenario, vector_downtime_stages) = Results_ex_post;
 
+    vector_prices = vector_prices[21:30]
+    vector_stages_index = vector_stages_index[21:30,:]
+    NSteps_scenario = NSteps_scenario[21:30]
+    vector_downtime_stages = vector_downtime_stages[21:30,:]
+
+    NScen=10
+
     println("Solving Optimization Problem")
 
     k = min_SOH/(2*Nfull)

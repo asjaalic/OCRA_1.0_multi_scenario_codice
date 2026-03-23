@@ -126,6 +126,13 @@ else
 
 end
 
+#=@unpack (vector_prices, vector_stages_index, NSteps_scenario, vector_downtime_stages) = Results_ex_post;
+
+vector_prices = vector_prices[21:30]
+vector_stages_index = vector_stages_index[21:30,:]
+NSteps_scenario = NSteps_scenario[21:30]
+vector_downtime_stages = vector_downtime_stages[21:30,:]=#
+
   @timeit to "Solve optimization problem WITH degradation" begin
     if OCRA_1 #if this is true, we solve the OCRA 1.0
       if bin == 3
@@ -143,6 +150,8 @@ end
       end
     end
   end
+
+  NScen=10
 
   @timeit to "Evaluate results WITH degradation: statistical analysis" begin
     if OCRA_1

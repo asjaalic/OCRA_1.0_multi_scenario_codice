@@ -131,7 +131,7 @@ function data_saving_without_deg_3(Results_No_Deg_3::ResultWithoutDeg_3, Results
     @unpack (revenues_per_stage_no_deg, soc_no_deg, soc_quad_no_deg, charge_no_deg, discharge_no_deg, x_no_deg, y_no_deg,z_no_deg) = Results_No_Deg_3;
     @unpack (deg_singola, deg_stage, costo_stage, net_revenues, vector_prices, vector_stages_index, vector_downtime_stages) = Results_ex_post;
 
-    cart = "SEST_final_scenario_3_bin_mu_0.95_MipGap_1"
+    cart = "SEST_mu_0.95_MipGap_1_scen_1_20"
     mkdir(cart)
     cd(cart)
     main = pwd()
@@ -688,7 +688,7 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     hour=string(now())
     a=replace(hour,':'=> '-')
 
-    nameF= "OCRA 2 filtrato $NScen scenari, E_Max_$max_SOH, mu=0.95_primo_rev "
+    nameF= "OCRA_2_E_Max_$max_SOH, mu=0.95 scen 21_30"
     folder = "$nameF"
     mkdir(folder)
     cd(folder)
@@ -696,14 +696,14 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     a = pwd()
     cd(a)
 
-    tot_WEM_rev = zeros(NScen)
-    tot_rev_costs = zeros(NScen)
-    tot_net_rev = zeros(NScen)
-    tot_deg = zeros(NScen)
-    tot_rev = zeros(NScen)
-    initial_cap = zeros(NScen)
+    tot_WEM_rev = zeros(NScen) #NScen
+    tot_rev_costs = zeros(NScen) #NScen
+    tot_net_rev = zeros(NScen) #NScen
+    tot_deg = zeros(NScen) #NScen
+    tot_rev = zeros(NScen) #NScen
+    initial_cap = zeros(NScen) #NScen
 
-    for iScen=1:NScen
+    for iScen=1:NScen#NScen
         tot_WEM_rev[iScen] = sum(WEM_stage[iScen,:])
         tot_rev_costs[iScen] = sum(cost_rev[iScen,:])
         tot_net_rev[iScen] = sum(net_revenues_per_stage[iScen,:])
@@ -725,7 +725,7 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     box_whiskers_costs = DataFrame()
     box_whiskers_net = DataFrame()
 
-    for iScen=1:NScen
+    for iScen=1:20#NScen
         box_whiskers_WEM[!,"Scen $iScen"] = WEM_stage[iScen,:]
         box_whiskers_costs[!,"Scen $iScen"] = cost_rev[iScen,:]
         box_whiskers_net[!,"Scen $iScen"] = net_revenues_per_stage[iScen,:]
@@ -746,14 +746,14 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     net_rev = (collect(DataFrames.eachcol(box_whiskers_net)),DataFrames.names(box_whiskers_net)),
     )
 
-    initial_cap_stage = zeros(NScen, NStages)
-    final_cap_stage = zeros(NScen, NStages)
+    initial_cap_stage = zeros(20, NStages) #NScen
+    final_cap_stage = zeros(20, NStages) #NScen
 
     indice_uno= 0
     indice_due = 0
 
     # SALVO I SINGOLI SCENARI
-    for iScen=1:NScen
+    for iScen=1:20#NScen
             for iStage=1:NStages
                 indice_uno = vector_stages_index[iScen,iStage]+2
                 indice_due = vector_stages_index[iScen,iStage+1]+1

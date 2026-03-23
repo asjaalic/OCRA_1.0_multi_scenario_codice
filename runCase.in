@@ -2,5 +2,5 @@ DataPath = C:\\GitHub\\OCRA_multi_scenario
 InputPath =  C:\\GitHub\\OCRA_multi_scenario
 ResultPath =  C:\\GitHub\\OCRA_multi_scenario\\Results_multi_scenario
 Results_JLD = C:\\GitHub\\OCRA_multi_scenario\\Results_JLD
-from_File= C:\\GitHub\\OCRA_multi_scenario\\Results_JLD\\Final_SEST_No_deg_NSteps_87600NScen_,100MipGap1
+from_File= C:\\GitHub\\OCRA_multi_scenario\\Results_JLD\\Final_SEST_MipGap_1
 
