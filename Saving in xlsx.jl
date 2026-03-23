@@ -685,6 +685,10 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     @unpack (WEM_rev_stat_frame, cost_stat_frame, net_rev_stat_frame, deg_stat_frame, rev_stat_frame, Initial_cap_stat_frame, Final_cap_stat_frame) = Results_statistics_OCRA_2;
     @unpack (min_SOC, max_SOC, min_P, max_P, Eff_charge, Eff_discharge, max_SOH, min_SOH, Nfull, fix, cost) = Battery ; 
 
+    vector_prices = vector_prices[21:30]
+    vector_stages_index = vector_stages_index[21:30,:]
+    NSteps_scenario = NSteps_scenario[21:30]
+
     hour=string(now())
     a=replace(hour,':'=> '-')
 
@@ -753,7 +757,7 @@ function saving_OCRA_2(InputParameters::InputParam, Results_OCRA_2::Results_OCRA
     indice_due = 0
 
     # SALVO I SINGOLI SCENARI
-    for iScen=1:20#NScen
+    for iScen=1:NScen
             for iStage=1:NStages
                 indice_uno = vector_stages_index[iScen,iStage]+2
                 indice_due = vector_stages_index[iScen,iStage+1]+1
